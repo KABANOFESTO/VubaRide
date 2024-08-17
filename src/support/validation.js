@@ -13,10 +13,11 @@ const loginUserSchema = joi.object({
     password: joi.string().min(6).required()
 });
 const messageSchema = joi.object({
-    name: joi.string().required(),
-    email: joi.string().email().required(),
-    message: joi.string().min(6).required(),
-})
+    sequence: joi.string().required(),
+    response: joi.string().required(),
+    options: joi.array().items(joi.string()).optional(),
+    name: joi.string().optional() // Make this optional if it's not necessary
+});
 
 module.exports = {
     loginUserSchema, messageSchema, createUserSchema

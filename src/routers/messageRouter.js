@@ -1,5 +1,8 @@
 const express = require('express');
-const Message = require('../models/message');
+const Message = require('../model/message.js');
+const { messageSchema } = require('../support/validation');
+const passport = require("passport");
+require('../middleware/passport'); // Ensure this initializes Passport
 
 const router = express.Router();
 
@@ -7,6 +10,12 @@ const router = express.Router();
 router.post('/', async (req, res) => {
     try {
         const { sequence, response, options } = req.body;
+
+        // Validate the request body
+        const { error } = messageSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
 
         // Check if the sequence already exists
         const existingMessage = await Message.findOne({ sequence });
@@ -73,6 +82,12 @@ router.put('/:sequence', async (req, res) => {
     try {
         const { response, options } = req.body;
 
+        // Validate the request body
+        const { error } = messageSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
+
         const updatedMessage = await Message.findOneAndUpdate(
             { sequence: req.params.sequence },
             { response, options },
@@ -83,7 +98,10 @@ router.put('/:sequence', async (req, res) => {
             return res.status(404).json({ message: 'Message not found' });
         }
 
-        res.status(200).json(updatedMessage);
+        res.status(200).json({
+            message: 'Message updated successfully',
+            data: updatedMessage
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error updating message', error });

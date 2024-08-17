@@ -1,6 +1,6 @@
 const express = require("express");
 const { createUserSchema, loginUserSchema } = require('../support/validation');
-const User = require('../models/userModel');
+const User = require('../model/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const passport = require("passport");

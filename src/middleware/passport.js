@@ -5,7 +5,7 @@ const ExtractJWT = passportJwt.ExtractJwt;
 // import passport from 'passport';
 const passport = require('passport');
 // import User from '../models/userModel'
-const User = require('../models/userModel');
+const User = require('../model/userModel');
 
 var opts = {}
 opts.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();

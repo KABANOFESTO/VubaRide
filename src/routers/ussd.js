@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const Message = require("../models/message");
+const Message = require("../model/message");
 const Africastalking = require("africastalking");
 dotenv.config();
 
